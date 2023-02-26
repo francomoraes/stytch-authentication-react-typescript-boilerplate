@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/stytch-authentication-react-typescript-boilerplate/static/css/main.90f6920e.css",
-    "main.js": "/stytch-authentication-react-typescript-boilerplate/static/js/main.8c2b0e0d.js",
-    "index.html": "/stytch-authentication-react-typescript-boilerplate/index.html",
-    "main.90f6920e.css.map": "/stytch-authentication-react-typescript-boilerplate/static/css/main.90f6920e.css.map",
-    "main.8c2b0e0d.js.map": "/stytch-authentication-react-typescript-boilerplate/static/js/main.8c2b0e0d.js.map"
+    "main.css": "./static/css/main.90f6920e.css",
+    "main.js": "./static/js/main.6e4b4af3.js",
+    "index.html": "./index.html",
+    "main.90f6920e.css.map": "./static/css/main.90f6920e.css.map",
+    "main.6e4b4af3.js.map": "./static/js/main.6e4b4af3.js.map"
   },
   "entrypoints": [
     "static/css/main.90f6920e.css",
-    "static/js/main.8c2b0e0d.js"
+    "static/js/main.6e4b4af3.js"
   ]
 }
