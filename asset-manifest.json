@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.90f6920e.css",
-    "main.js": "/static/js/main.aa6a4aa6.js",
-    "index.html": "/index.html",
-    "main.90f6920e.css.map": "/static/css/main.90f6920e.css.map",
-    "main.aa6a4aa6.js.map": "/static/js/main.aa6a4aa6.js.map"
+    "main.css": "/%7Bstytch-authentication-react-typescript-boilerplate%7D/static/css/main.90f6920e.css",
+    "main.js": "/%7Bstytch-authentication-react-typescript-boilerplate%7D/static/js/main.0b444989.js",
+    "index.html": "/%7Bstytch-authentication-react-typescript-boilerplate%7D/index.html",
+    "main.90f6920e.css.map": "/%7Bstytch-authentication-react-typescript-boilerplate%7D/static/css/main.90f6920e.css.map",
+    "main.0b444989.js.map": "/%7Bstytch-authentication-react-typescript-boilerplate%7D/static/js/main.0b444989.js.map"
   },
   "entrypoints": [
     "static/css/main.90f6920e.css",
-    "static/js/main.aa6a4aa6.js"
+    "static/js/main.0b444989.js"
   ]
 }
