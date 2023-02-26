@@ -8,6 +8,10 @@ import {
     CustomInput,
     CustomLink,
     ImageDiv,
+    Modal,
+    ModalButton,
+    ModalText,
+    Overlay,
     ToggleContainer
 } from './styles';
 import Toggle from '../components/toggle';
@@ -18,10 +22,8 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { toggleTheme, theme } = useTheme();
-
-    // const navigate = (path: string) => {
-    //     return <Navigate to={path} />;
-    // };
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -50,14 +52,29 @@ export const Login = () => {
                 session_duration_minutes: 60
             })
             .then((response) => {
+                console.log('response: ', response);
                 if (response?.status_code === 200) {
                     navigate('/homepage');
                 }
+            })
+            .catch(() => {
+                setShowModal(true);
+                setModalMessage('Invalid email or password');
             });
     };
 
     return (
         <Container>
+            {showModal && (
+                <Overlay onClick={() => setShowModal(false)}>
+                    <Modal>
+                        <ModalText>{modalMessage}</ModalText>
+                        <ModalButton onClick={() => setShowModal(false)}>
+                            X
+                        </ModalButton>
+                    </Modal>
+                </Overlay>
+            )}
             <ToggleContainer>
                 <Toggle
                     labelLeft="Light"
@@ -69,7 +86,7 @@ export const Login = () => {
             <CustomBox>
                 <ImageDiv />
                 <CustomInput
-                    placeholder="mail@mail.com"
+                    placeholder="Enter your email"
                     onChange={(event) => {
                         setEmail(event.target.value);
                     }}

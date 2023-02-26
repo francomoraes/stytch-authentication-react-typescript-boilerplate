@@ -19,13 +19,14 @@ export const CustomBox = styled.div`
     background-color: ${(props) => props.theme.color.primary};
     height: 60%;
     width: 30%;
+    max-width: 400px;
     border-radius: 12px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 `;
 
 export const ImageDiv = styled.div`
     background: url(${loginBackground});
-    background-size: auto 150%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     width: calc(100% - 100px);
@@ -80,7 +81,7 @@ export const CustomLink = styled.a`
     :active {
         scale: 0.95;
     }
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto', sans-serif;
     margin-bottom: 30px;
 `;
 
@@ -88,4 +89,60 @@ export const ToggleContainer = styled.div`
     position: absolute;
     top: 10px;
     left: 10px;
+`;
+
+export const Overlay = styled.div`
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+`;
+
+export const Modal = styled.div`
+    align-items: center;
+    background-color: ${(props) => props.theme.color.primary};
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    color: ${(props) => props.theme.color.white};
+    display: flex;
+    align-items: center;
+    font-family: 'Noto', sans-serif;
+    font-size: 16px;
+    height: 200px;
+    padding: 0 20px;
+    position: relative;
+    width: 250px;
+`;
+
+export const ModalButton = styled.button`
+    width: 40px;
+    height: 40px;
+    background-color: ${(props) => props.theme.color.secondary};
+    border-radius: 10px;
+    color: ${(props) => props.theme.color.black};
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    :hover {
+        background-color: ${(props) => props.theme.color.tertiary};
+        color: ${(props) => props.theme.color.gray};
+        scale: 1.05;
+    }
+    :active {
+        scale: 0.95;
+    }
+    position: absolute;
+    top: 10px;
+    right: 10px;
+`;
+
+export const ModalText = styled.p`
+    text-align: justify;
+    line-height: 1.5;
+    margin-top: 20px;
 `;

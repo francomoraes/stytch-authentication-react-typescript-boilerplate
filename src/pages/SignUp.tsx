@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useStytch } from '@stytch/react';
 import { useTheme } from '../hooks/themes';
 import {
@@ -8,14 +8,22 @@ import {
     CustomInput,
     CustomLink,
     ImageDiv,
+    Modal,
+    ModalButton,
+    ModalText,
+    Overlay,
     ToggleContainer
 } from './styles';
 import Toggle from '../components/toggle';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { toggleTheme, theme } = useTheme();
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const [darkTheme, setDarkTheme] = useState(() =>
         theme.title === 'dark' ? true : false
@@ -31,8 +39,21 @@ export const SignUp = () => {
     const signUp = () => {
         stytchClient.passwords
             .strengthCheck({ email, password })
-            .then((res) => {
-                console.log('Success: ', res);
+            .then((response) => {
+                console.log('response: ', response);
+                if (response?.valid_password === true) {
+                    navigate('/homepage');
+                }
+                if (response?.valid_password === false) {
+                    setShowModal(true);
+                    setModalMessage(
+                        response?.feedback.warning +
+                            ' ' +
+                            response?.feedback.suggestions.map(
+                                (suggestion) => suggestion
+                            )
+                    );
+                }
             })
             .catch((err) => {
                 console.log('Err: ', err);
@@ -44,12 +65,18 @@ export const SignUp = () => {
         });
     };
 
-    const logout = useCallback(() => {
-        stytchClient.session.revoke();
-    }, [stytchClient]);
-
     return (
         <Container>
+            {showModal && (
+                <Overlay onClick={() => setShowModal(false)}>
+                    <Modal>
+                        <ModalText>{modalMessage}</ModalText>
+                        <ModalButton onClick={() => setShowModal(false)}>
+                            X
+                        </ModalButton>
+                    </Modal>
+                </Overlay>
+            )}
             <ToggleContainer>
                 <Toggle
                     labelLeft="Light"
@@ -61,7 +88,7 @@ export const SignUp = () => {
             <CustomBox>
                 <ImageDiv />
                 <CustomInput
-                    placeholder="mail@mail.com"
+                    placeholder="Enter your email"
                     onChange={(event) => {
                         setEmail(event.target.value);
                     }}
@@ -73,11 +100,10 @@ export const SignUp = () => {
                         setPassword(event.target.value);
                     }}
                 />
-                <CustomButton onClick={signUp}> Login</CustomButton>
+                <CustomButton onClick={signUp}> Sign Up</CustomButton>
                 <CustomLink href={'/login'}>
                     Already have an account? Login
                 </CustomLink>
-                <button onClick={logout}>Logout</button>
             </CustomBox>
         </Container>
     );
