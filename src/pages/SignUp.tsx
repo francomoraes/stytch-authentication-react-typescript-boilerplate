@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useStytch } from '@stytch/react';
 import { useTheme } from '../hooks/themes';
 import {
     Container,
@@ -16,10 +15,16 @@ import {
 } from './styles';
 import Toggle from '../components/toggle';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../App';
 
-export const SignUp = () => {
+interface Props {
+    loadUser: (data: User) => void;
+}
+
+export const SignUp: React.FC<Props> = ({ loadUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
     const { toggleTheme, theme } = useTheme();
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -34,35 +39,32 @@ export const SignUp = () => {
         toggleTheme();
     };
 
-    const stytchClient = useStytch();
-
     const signUp = () => {
-        stytchClient.passwords
-            .strengthCheck({ email, password })
-            .then((response) => {
-                console.log('response: ', response);
-                if (response?.valid_password === true) {
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password
+            })
+        })
+            .then((response) => response.json())
+            .then((user) => {
+                if (user) {
+                    loadUser(user);
                     navigate('/homepage');
-                }
-                if (response?.valid_password === false) {
+                } else {
+                    setModalMessage('Unable to register');
                     setShowModal(true);
-                    setModalMessage(
-                        response?.feedback.warning +
-                            ' ' +
-                            response?.feedback.suggestions.map(
-                                (suggestion) => suggestion
-                            )
-                    );
                 }
             })
             .catch((err) => {
-                console.log('Err: ', err);
+                setModalMessage('Unable to get response from server');
+                setShowModal(true);
             });
-        stytchClient.passwords.create({
-            email,
-            password,
-            session_duration_minutes: 60
-        });
     };
 
     return (
@@ -87,6 +89,12 @@ export const SignUp = () => {
             </ToggleContainer>
             <CustomBox>
                 <ImageDiv />
+                <CustomInput
+                    placeholder="Enter your name"
+                    onChange={(event) => {
+                        setName(event.target.value);
+                    }}
+                />
                 <CustomInput
                     placeholder="Enter your email"
                     onChange={(event) => {

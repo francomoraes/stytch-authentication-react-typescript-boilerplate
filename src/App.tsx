@@ -5,7 +5,6 @@ import {
     Route,
     Navigate
 } from 'react-router-dom';
-import { useStytchUser } from '@stytch/react';
 import { ResetPassword } from './pages/ResetPassword';
 import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
@@ -13,6 +12,15 @@ import { useTheme } from './hooks/themes';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Homepage from './pages/Homepage';
+import { useState } from 'react';
+
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+}
+
+//318. User Profile Update
 
 const App: React.FC = () => {
     const navigate = (path: string) => {
@@ -21,7 +29,17 @@ const App: React.FC = () => {
 
     const { theme } = useTheme();
 
-    const { user } = useStytchUser();
+    const [user, setUser] = useState<User | null>(null);
+
+    const loadUser = (data: User) => {
+        setUser({
+            id: data.id,
+            name: data.name,
+            email: data.email
+        });
+    };
+
+    const unloadUser = () => setUser(null);
 
     return (
         <div className="App">
@@ -37,14 +55,22 @@ const App: React.FC = () => {
                                 />
                                 <Route
                                     path="/homepage"
-                                    element={<Homepage />}
+                                    element={
+                                        <Homepage unloadUser={unloadUser} />
+                                    }
                                 />
                             </>
                         ) : (
                             <>
                                 <Route path="/" element={navigate('/login')} />
-                                <Route path="/signup" element={<SignUp />} />
-                                <Route path="/login" element={<Login />} />
+                                <Route
+                                    path="/signup"
+                                    element={<SignUp loadUser={loadUser} />}
+                                />
+                                <Route
+                                    path="/login"
+                                    element={<Login loadUser={loadUser} />}
+                                />
                                 <Route
                                     path="/resetpassword/*"
                                     element={<ResetPassword />}

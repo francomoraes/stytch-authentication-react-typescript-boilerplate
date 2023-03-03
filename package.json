@@ -1,8 +1,8 @@
 {
-    "name": "stytch-pwd",
+    "name": "boilerplate-front-end",
     "version": "0.1.0",
     "private": true,
-    "homepage": "http://francomoraes.github.io/stytch-authentication-react-typescript-boilerplate",
+    "homepage": "",
     "dependencies": {
         "@stytch/headless-client": "^0.1.2",
         "@stytch/react": "^0.3.3",

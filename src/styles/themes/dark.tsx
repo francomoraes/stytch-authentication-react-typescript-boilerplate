@@ -3,7 +3,7 @@ const dark = {
 
     color: {
         primary: '#395B64',
-        secondary: '#A5C9CA',
+        secondary: '#647677',
         tertiary: '#E7F6F2',
 
         white: '#fff',

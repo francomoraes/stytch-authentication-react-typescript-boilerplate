@@ -45,6 +45,9 @@ export const CustomInput = styled.input`
     ::placeholder {
         color: ${(props) => props.theme.color.gray};
     }
+    :focus {
+        background-color: ${(props) => props.theme.color.secondary + 33};
+    }
 `;
 
 export const CustomButton = styled.button`
@@ -57,7 +60,8 @@ export const CustomButton = styled.button`
     border: none;
     cursor: pointer;
     transition: 0.2s;
-    :hover {
+    :hover,
+    :focus {
         background-color: ${(props) => props.theme.color.tertiary};
         color: ${(props) => props.theme.color.gray};
         scale: 1.05;
@@ -74,9 +78,13 @@ export const CustomLink = styled.a`
     font-size: 14px;
     cursor: pointer;
     transition: 0.2s;
-    :hover {
+    :hover,
+    :focus {
         color: ${(props) => props.theme.color.white};
         scale: 1.05;
+        background-color: ${(props) => props.theme.color.secondary + 67};
+        padding: 10px;
+        border-radius: 15px;
     }
     :active {
         scale: 0.95;

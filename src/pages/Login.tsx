@@ -17,8 +17,11 @@ import {
 import Toggle from '../components/toggle';
 import { useTheme } from '../hooks/themes';
 import { useNavigate } from 'react-router-dom';
-
-export const Login = () => {
+import { User } from '../App';
+interface Props {
+    loadUser: (data: User) => void;
+}
+export const Login: React.FC<Props> = ({ loadUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { toggleTheme, theme } = useTheme();
@@ -45,21 +48,25 @@ export const Login = () => {
     }, [stytchClient, email]);
 
     const login = () => {
-        stytchClient.passwords
-            .authenticate({
-                email,
-                password,
-                session_duration_minutes: 60
+        fetch('http://localhost:3000/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
             })
-            .then((response) => {
-                console.log('response: ', response);
-                if (response?.status_code === 200) {
+        })
+            .then((response) => response.json())
+            .then((user) => {
+                if (user.id) {
+                    loadUser(user);
                     navigate('/homepage');
+                } else {
+                    setShowModal(true);
+                    setModalMessage('Invalid email or password');
                 }
-            })
-            .catch(() => {
-                setShowModal(true);
-                setModalMessage('Invalid email or password');
             });
     };
 

@@ -1,17 +1,17 @@
-import { useStytch } from '@stytch/react';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Homepage = () => {
-    const stytchClient = useStytch();
+interface Props {
+    unloadUser: () => void;
+}
 
+const Homepage: React.FC<Props> = ({ unloadUser }) => {
     const navigate = useNavigate();
 
     const logout = useCallback(() => {
-        stytchClient.session.revoke().then(() => {
-            navigate('/login');
-        });
-    }, [stytchClient, navigate]);
+        unloadUser();
+        navigate('/login');
+    }, [unloadUser, navigate]);
 
     return (
         <div>
